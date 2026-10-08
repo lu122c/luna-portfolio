@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="卢卿姚 Luna 的个人作品集，涵盖视觉设计、装置设计与品牌项目。" />
+    <meta name="theme-color" content="#dacec3" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='white'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23ff5723' stroke-width='4'/%3E%3C/svg%3E" />
+    <title>Luna — Portfolio</title>
+    <link rel="preload" href="./assets/source-han-sans-sc-reveal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="./assets/styles.css?v=uniform-beaded-talk-20261008" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="site-nav" aria-label="主要导航">
+        <a class="nav-link is-active" href="#home" data-route="home">Home</a>
+        <a class="nav-link" href="#works" data-route="works">Works</a>
+        <a class="nav-link" href="#about" data-route="about">About</a>
+      </nav>
+      <a class="works-talk" href="mailto:Lulu5098@163.com" aria-label="LET’S TALK" aria-hidden="true">
+        <img class="works-talk-label" src="./assets/lets-talk-beads.svg" alt="" aria-hidden="true" />
+        <svg viewBox="0 0 36 24" aria-hidden="true"><ellipse cx="5" cy="4" rx="3.3" ry="2"/><ellipse cx="12" cy="8" rx="3.3" ry="2"/><ellipse cx="19" cy="12" rx="3.3" ry="2"/><ellipse cx="12" cy="16" rx="3.3" ry="2"/><ellipse cx="5" cy="20" rx="3.3" ry="2"/></svg>
+      </a>
+    </header>
+
+    <main id="app" tabindex="-1">
+      <section class="view home-view is-active" data-view="home" aria-labelledby="home-title">
+        <h1 id="home-title" class="sr-only">WELCOME IN — Luna 的个人作品集</h1>
+        <p class="sr-only">欢迎来到Luna的空间。这里收录了Luna的所有动态作品。如果你愿意多停一会儿，也许会发现一些共鸣。</p>
+        <div class="home-curtain-fallback" aria-hidden="true"><span>WELCOME IN</span></div>
+        <canvas id="home-canvas" aria-hidden="true"></canvas>
+      </section>
+
+      <section class="view works-view" data-view="works" aria-labelledby="works-title">
+        <h1 id="works-title" class="sr-only">WORKS — 动态作品</h1>
+        <div class="motion-projects" id="motion-projects"></div>
+      </section>
+
+      <section class="view project-view" data-view="project" aria-labelledby="project-detail-title">
+        <div class="page-shell detail-shell">
+          <div class="detail-hero"><img id="detail-image" src="./assets/project-01.jpg" alt="" /></div>
+          <div class="detail-heading">
+            <div>
+              <p class="eyebrow" id="detail-kicker">BRAND / EDITORIAL</p>
+              <h1 id="project-detail-title">余像计划</h1>
+            </div>
+            <dl class="detail-meta">
+              <div><dt>ROLE</dt><dd id="detail-role">Visual Designer</dd></div>
+              <div><dt>YEAR</dt><dd id="detail-year">2026</dd></div>
+              <div hidden><dt>TOOLS｜创作工具</dt><dd id="detail-tools"></dd></div>
+              <div id="detail-status"><dt>STATUS</dt><dd>Placeholder</dd></div>
+            </dl>
+          </div>
+          <div class="detail-body">
+            <h2>Project Overview</h2>
+            <p id="detail-description">这是一段项目简介占位文字。正式整理作品时，可在此说明背景、问题、设计目标与个人职责。</p>
+            <div class="detail-notes">
+              <article><span>01</span><h3>Context</h3><p>说明项目发生的场景、受众和关键需求。</p></article>
+              <article><span>02</span><h3>Approach</h3><p>展示研究、概念推演与视觉系统的形成过程。</p></article>
+              <article><span>03</span><h3>Outcome</h3><p>放置最终成果、应用延展和项目反馈。</p></article>
+            </div>
+          </div>
+          <div id="detail-chapters" class="detail-chapters" hidden></div>
+          <nav class="project-pager" aria-label="浏览其他项目">
+            <a data-previous-project aria-label="上一个项目"><svg class="pager-arrow" viewBox="0 0 28 40" aria-hidden="true"><ellipse cx="22" cy="4" rx="3.4" ry="2"/><ellipse cx="16" cy="9.5" rx="3.4" ry="2"/><ellipse cx="10" cy="15" rx="3.4" ry="2"/><ellipse cx="5" cy="20" rx="3.4" ry="2"/><ellipse cx="10" cy="25" rx="3.4" ry="2"/><ellipse cx="16" cy="30.5" rx="3.4" ry="2"/><ellipse cx="22" cy="36" rx="3.4" ry="2"/></svg></a>
+            <a data-next-project aria-label="下一个项目"><svg class="pager-arrow" viewBox="0 0 28 40" aria-hidden="true"><ellipse cx="6" cy="4" rx="3.4" ry="2"/><ellipse cx="12" cy="9.5" rx="3.4" ry="2"/><ellipse cx="18" cy="15" rx="3.4" ry="2"/><ellipse cx="23" cy="20" rx="3.4" ry="2"/><ellipse cx="18" cy="25" rx="3.4" ry="2"/><ellipse cx="12" cy="30.5" rx="3.4" ry="2"/><ellipse cx="6" cy="36" rx="3.4" ry="2"/></svg></a>
+          </nav>
+        </div>
+      </section>
+
+      <section class="view about-view" data-view="about" aria-labelledby="about-title">
+        <div class="about-layout">
+          <aside class="about-photo-panel" aria-label="个人照片">
+          <div class="about-photo-stack">
+            <div class="about-photo-frame">
+              <div class="portrait-crop" role="img" aria-label="卢卿姚的个人照片">
+                <img src="./assets/about-reference.png" alt="" />
+              </div>
+            </div>
+            <nav class="about-contact-links" aria-label="联系方式">
+              <a href="mailto:Lulu5098@163.com"><span>Email</span><svg class="contact-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 10 10 2M3 2h7v7" /></svg><span class="contact-detail">Lulu5098@163.com</span></a>
+              <a href="https://www.xiaohongshu.com/user/profile/59550d755e87e77d491c66eb" target="_blank" rel="noopener noreferrer"><span>Redbook</span><svg class="contact-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 10 10 2M3 2h7v7" /></svg><span class="contact-detail">lululu_1217</span></a>
+              <a href="tel:+8617326095098"><span>Phone</span><svg class="contact-arrow" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 10 10 2M3 2h7v7" /></svg><span class="contact-detail">17326095098</span></a>
+            </nav>
+          </div>
+          </aside>
+          <div class="about-scroll" tabindex="0" role="region" aria-label="个人介绍与履历，可滚动">
+          <section class="about-hero-copy">
+            <h1 id="about-title"><span class="sr-only">LUNA</span><img class="about-bead-name" src="./assets/luna-bead-name.svg" alt="" aria-hidden="true" /></h1>
+            <p class="about-lead">中国美术学院 · 艺术与科技<br />视觉设计与AI创作</p>
+            <p><span class="about-pink-intro">我是卢卿姚，也可以叫我Luna。</span>中国美术学院本硕，先后在腾讯、小红书及相对态设计工作室实习，拥有品牌全案、活动视觉、会员体验、联名周边及 AIGC 设计等多元项目经验。</p>
+            <p>以专业课双 140、综合成绩第一考入中国美术学院研究生，品牌设计课程获 94 分，数字基础课程获 92 分，大模型辅助编程课程获 90 分，连续六年获得学业奖学金，本科毕业设计获中国美术学院林风眠创作奖铜奖。</p>
+            <p>持续探索「设计 × AI × 编程」的工作方式，关注 AI 如何介入视觉与交互，并尝试通过编程拓展设计的更多可能。</p>
+          </section>
+        <div class="resume-shell">
+          <div class="resume-grid">
+            <div class="resume-main">
+              <section class="resume-block education">
+                <h3><span class="ring" aria-hidden="true"></span>教育背景</h3>
+                <div class="education-list">
+                  <div class="education-row"><div><strong>中国美术学院</strong><p>艺术与科技 / 本科</p></div><time>2020-2024</time></div>
+                  <div class="education-row"><div><strong>中国美术学院</strong><p>艺术与科技 / 硕士</p></div><time>2024-2027</time></div>
+                </div>
+              </section>
+
+              <section class="resume-block">
+                <h3><span class="ring" aria-hidden="true"></span>实习经历</h3>
+                <article class="resume-entry">
+                  <header><h4>相对态设计工作室</h4><time>2025.07-2025.10</time></header>
+                  <p>「中国（杭州）艺术与科技国际双年展」负责展览 Logo 设计与主视觉基础图形设计；协助美术指导完成展览主视觉设计，以及后续导览手册、导视系统、线上线下宣传物料的延展。展览单日客流量最高达 5000 人，共得到光明日报、Global Times 环球时报等海内外上千家媒体报道。</p>
+                </article>
+                <article class="resume-entry">
+                  <header><h4>小红书</h4><time>2025.12-2026.03</time></header>
+                  <p>「小红书电影——春节档」负责协助美术指导，运用 AI 生成电影主题小戳与六部影片的宣传海报底图，并制作宣传海报的五个转场动态。</p>
+                  <p>「小红书周边——出门走走系列」负责 REDclub 官方账号直播间场景搭建与贴片设计；在既定品牌规范下完成该系列全套线上线下推广视觉。</p>
+                  <p>「小红书喜剧厂牌——REDcomedy」负责品牌 Logo 设计与品牌规范制定。</p>
+                  <p>「赵露思微综艺——我可以是任何」负责综艺 Logo、封面版式与辅助图形设计。</p>
+                </article>
+                <article class="resume-entry">
+                  <header><h4>腾讯-QQ音乐</h4><time>2026.05-2026.09</time></header>
+                  <p>「会员体验设计——红包膨胀」负责会员转化激励全链路设计；AI 辅助红包膨胀动画与动态弹窗设计，上线后开通收入增加 1.6w 元/天。</p>
+                  <p>「会员体验设计——星动福利站下拉动画」平台“我的”tab 下拉动画设计。</p>
+                  <p>「会员体验设计——会员弹窗」覆盖首页、会员中心、收银台、微信摇一摇界面。</p>
+                  <p>「会员体验设计——会员 banner」覆盖首页、会员中心、收银台、音质音效界面。</p>
+                  <p>「联名周边——光与夜之恋」负责全套五个男主七个制品的视觉设计与延展；所有制品的工艺规划。</p>
+                  <p>「联名周边——THOM BROWNE」负责品牌联名视觉图形与规范设计；全套周边品类的视觉设计延展与工艺规划。</p>
+                  <p>「AI辅助创意设计——泰嗨巅峰音乐节」制作 skill 提效，与外包同学协作两天之内完成 160 个 Q 版表情包制作；一周内交付 16 套贴纸与冰凉贴。</p>
+                  <p>「AI辅助创意设计——AI男团巅峰少年101」负责综艺 Logo 设计；运用 AI 辅助人物服装与场景效果图搭建。</p>
+                </article>
+              </section>
+
+              <section class="resume-block">
+                <h3><span class="ring" aria-hidden="true"></span>项目经历</h3>
+                <article class="resume-entry compact-entry">
+                  <header><h4>良渚新港村艺术乡村建设</h4><time>2025.12-2026.03</time></header>
+                  <p>「装置设计」设计三个与良渚刻符故事相关的叙事性童趣场景装置。</p>
+                </article>
+                <article class="resume-entry compact-entry">
+                  <header><h4>上海玩具博物馆品牌升级</h4><time>2025.03-2025.05</time></header>
+                  <p>「标志设计」Logo 以舒展的线条为核心元素，模拟跳蛙蓄力弹跳感。</p>
+                  <p>「玩具设计」对原有的铁皮玩具做造型升级，用户可自定义玩具玩法。</p>
+                </article>
+                <article class="resume-entry compact-entry">
+                  <header><h4>世纪联华酒饮品牌设计——良酉</h4><time>2023.09-2023.12</time></header>
+                  <p>「标志设计」设计中英文结合的文字 Logo，突出鸡尾酒特色。</p>
+                  <p>「图形设计」设计六款纹理图形适配六款不同口味酒饮。</p>
+                  <p>「场景建模」以“实验室”为概念，设计可以识别情绪并调酒的虚拟酒馆。</p>
+                </article>
+              </section>
+
+              <section class="resume-block awards">
+                <h3><span class="ring" aria-hidden="true"></span>获奖经历</h3>
+                <ul>
+                  <li>2026年 获第八届·CADA日本概念艺术设计奖铜奖</li>
+                  <li>2026年 获G-CROSS Creative Award铜奖</li>
+                  <li>2026年 作品入选 AVADA 亚洲新锐艺术与设计大奖</li>
+                  <li>2025年 作品入选第十届中国北京美术双年展</li>
+                  <li>2025年 获第六届中国大学生创意节入围奖</li>
+                  <li>2025年 获第二十五届白金创意国际大学生平面设计大赛入围奖</li>
+                  <li>2024年 获 CGDA2024 平面设计学院奖铜奖一项、入围奖三项</li>
+                  <li>2024年 作品入选第十届“未来之星”全国大学生视觉设计作品展览</li>
+                  <li>2024年 获 KTK 设计奖2024全球华人设计赛银奖</li>
+                  <li>2024年 获 SGADC 第五届新加坡金沙艺术设计大赛铜奖</li>
+                  <li>2024年 获第二十四届白金创意国际大学生平面设计大赛入围奖</li>
+                  <li>2024年 获中国美术学院毕业创作暨林风眠创作铜奖</li>
+                  <li>2024年 以专业课双140，综合分第一名考研上岸</li>
+                  <li>2023年 作品入选“最设计：设计再出发2023·载入杭州”</li>
+                  <li>2023年 获第三届 ICAD 国际当代青年美术设计大赛银奖两项、铜奖一项</li>
+                  <li>2023年 获 BICC 中英国际创意大赛银奖一项、铜奖一项</li>
+                </ul>
+              </section>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="./assets/app.js?v=beaded-talk-20261008"></script>
+  </body>
+</html>
