@@ -592,7 +592,7 @@ body.is-about { background: #dacec3; overflow: hidden; }
 }
 .about-scroll { min-height: 0; overflow-y: auto; overflow-x: hidden; padding: 0 18px 36px 0; scrollbar-width: thin; scrollbar-color: #8e4806 transparent; overscroll-behavior-y: contain; }
 .about-scroll:focus-visible { outline: 2px solid #ff6ccd; outline-offset: 3px; }
-.about-scroll .about-hero-copy { min-height: calc(100svh - 110px); padding: 0 0 60px; display: flex; flex-direction: column; justify-content: flex-start; border: 0; }
+.about-scroll .about-hero-copy { min-height: calc(100svh - 110px); padding: clamp(48px, 7vh, 80px) 0 60px; display: flex; flex-direction: column; justify-content: flex-start; border: 0; }
 .about-scroll .about-hero-copy h1 { flex: none; width: clamp(220px,20vw,404px); margin: 0 0 36px; padding: 0; background: #ff6ccd; }
 .about-bead-name { display: block; width: 100%; height: auto; }
 .about-scroll .about-hero-copy .about-lead { color: #003f2c; font-size: clamp(25px,2.5vw,34px); line-height: 1.4; margin-bottom: 32px; }
