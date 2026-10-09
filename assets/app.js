@@ -2,8 +2,140 @@ const links = [...document.querySelectorAll("[data-route]")];
 const views = [...document.querySelectorAll("[data-view]")];
 const app = document.querySelector("#app");
 const worksTalk = document.querySelector(".works-talk");
+const wechatDialog = document.querySelector("#wechat-dialog");
+const wechatClose = document.querySelector(".wechat-close");
+const wechatCard = document.querySelector(".wechat-card");
+const wechatRope = document.querySelector(".wechat-rope");
+const wechatRopeTop = document.querySelector(".wechat-rope-top");
+const wechatRopeTail = document.querySelector(".wechat-rope-tail");
+const wechatBottomBead = document.querySelector(".wechat-bead-bottom");
+let wechatMotionFrame = 0;
+let wechatMotion = null;
 let worksTalkLastY = 0;
 let worksTalkFrame = 0;
+
+function paintWechat() {
+  if (!wechatMotion) return;
+  const { x, y, vx } = wechatMotion;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const cardWidth = wechatCard.offsetWidth;
+  const cardHeight = wechatCard.offsetHeight;
+  const anchorX = width / 2;
+  const cardTop = y - cardHeight / 2;
+  const cardBottom = y + cardHeight / 2;
+  const idleSway = wechatMotion.idle
+    ? Math.sin((wechatMotion.swayTime - wechatMotion.idleStart) / 950) * 11
+      + Math.sin((wechatMotion.swayTime - wechatMotion.idleStart) / 1510) * 2
+    : 0;
+  const cardX = x + idleSway;
+  const angle = Math.max(-11, Math.min(11, (x - anchorX) * .022 - vx * .002 + idleSway * .045));
+  const curve = Math.max(-54, Math.min(54, -vx * .022 + idleSway * .35));
+  const lineEnd = Math.max(29, cardTop + 3);
+  const tailX = cardX + Math.sin(angle * Math.PI / 180) * cardHeight * .34;
+  const beadX = tailX + Math.max(-21, Math.min(21, -vx * .014)) + idleSway * .14;
+  const beadY = Math.min(height - 22, cardBottom + 70);
+
+  wechatCard.style.transform = `translate3d(${cardX - cardWidth / 2}px, ${cardTop}px, 0) rotate(${angle}deg)`;
+  wechatRope.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  wechatRopeTop.setAttribute("d", `M ${anchorX} 29 C ${anchorX + curve * .5} ${Math.max(45, lineEnd * .36)}, ${cardX - (cardX - anchorX) * .22 + curve} ${Math.max(38, lineEnd * .75)}, ${cardX} ${lineEnd}`);
+  wechatRopeTail.setAttribute("d", `M ${tailX} ${cardBottom - 2} Q ${tailX + curve * .5} ${cardBottom + 40}, ${beadX} ${beadY}`);
+  wechatBottomBead.style.transform = `translate3d(${beadX - 11}px, ${beadY - 7.5}px, 0)`;
+}
+
+function startWechatDrop() {
+  cancelAnimationFrame(wechatMotionFrame);
+  const anchorX = window.innerWidth / 2;
+  const cardHeight = wechatCard.offsetHeight;
+  const targetY = Math.min(
+    Math.max(cardHeight / 2 + 72, window.innerHeight * .53),
+    window.innerHeight - cardHeight / 2 - 86
+  );
+  wechatMotion = {
+    x: anchorX + Math.min(300, window.innerWidth * .32),
+    y: -cardHeight * .42,
+    vx: 0,
+    vy: 0,
+    targetY,
+    started: 0,
+    last: 0,
+    idle: false,
+    swayTime: 0,
+    idleStart: 0
+  };
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    wechatMotion.x = anchorX;
+    wechatMotion.y = targetY;
+    paintWechat();
+    return;
+  }
+  paintWechat();
+  const step = time => {
+    if (wechatDialog.hidden || !wechatMotion) return;
+    const motion = wechatMotion;
+    if (motion.idle) {
+      motion.swayTime = time;
+      paintWechat();
+      wechatMotionFrame = requestAnimationFrame(step);
+      return;
+    }
+    if (!motion.started) motion.started = time;
+    const dt = Math.min(.035, (time - (motion.last || time - 16)) / 1000);
+    motion.last = time;
+    const stiffness = 8.2 ** 2;
+    const damping = 2 * .4 * 8.2;
+    motion.vx += (-stiffness * (motion.x - window.innerWidth / 2) - damping * motion.vx) * dt;
+    motion.vy += (-stiffness * (motion.y - motion.targetY) - damping * motion.vy) * dt;
+    motion.x += motion.vx * dt;
+    motion.y += motion.vy * dt;
+    paintWechat();
+    if (time - motion.started > 2800 && Math.abs(motion.vx) < 2 && Math.abs(motion.vy) < 2) {
+      motion.x = window.innerWidth / 2;
+      motion.y = motion.targetY;
+      motion.vx = motion.vy = 0;
+      motion.idle = true;
+      motion.swayTime = time;
+      motion.idleStart = time;
+      paintWechat();
+      wechatMotionFrame = requestAnimationFrame(step);
+      return;
+    }
+    wechatMotionFrame = requestAnimationFrame(step);
+  };
+  wechatMotionFrame = requestAnimationFrame(step);
+}
+
+function closeWechat(restoreFocus = true) {
+  if (wechatDialog.hidden) return;
+  cancelAnimationFrame(wechatMotionFrame);
+  wechatMotionFrame = 0;
+  wechatMotion = null;
+  wechatDialog.hidden = true;
+  document.body.classList.remove("wechat-open");
+  worksTalk.setAttribute("aria-expanded", "false");
+  if (restoreFocus && worksTalk.classList.contains("is-visible")) worksTalk.focus();
+}
+
+worksTalk.addEventListener("click", () => {
+  wechatDialog.hidden = false;
+  document.body.classList.add("wechat-open");
+  worksTalk.setAttribute("aria-expanded", "true");
+  startWechatDrop();
+  wechatClose.focus();
+});
+window.addEventListener("resize", () => {
+  if (wechatDialog.hidden || !wechatMotion) return;
+  const cardHeight = wechatCard.offsetHeight;
+  wechatMotion.targetY = Math.min(Math.max(cardHeight / 2 + 72, innerHeight * .53), innerHeight - cardHeight / 2 - 86);
+  paintWechat();
+});
+wechatClose.addEventListener("click", () => closeWechat());
+document.querySelector(".wechat-backdrop").addEventListener("click", () => closeWechat());
+document.addEventListener("keydown", event => {
+  if (wechatDialog.hidden) return;
+  if (event.key === "Escape") { event.preventDefault(); closeWechat(); }
+  if (event.key === "Tab") { event.preventDefault(); wechatClose.focus(); }
+});
 
 const projects = {
   jingjingyu: {
@@ -263,6 +395,7 @@ let worksObserver;
 document.querySelector('[data-previous-project]').addEventListener('click', () => { document.body.dataset.projectDirection = 'previous'; });
 document.querySelector('[data-next-project]').addEventListener('click', () => { document.body.dataset.projectDirection = 'next'; });
 function setRoute({ restart = false } = {}) {
+  closeWechat(false);
   document.querySelectorAll('.project-view video').forEach(video=>video.pause());
   const hash = location.hash.slice(1) || "home";
   const isProject = hash.startsWith("project-");
@@ -401,7 +534,7 @@ function initInertialScroll() {
   window.addEventListener('wheel', event => {
     if (reduced.matches || !desktop.matches || event.defaultPrevented || !event.cancelable ||
         event.ctrlKey || event.metaKey || event.shiftKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) ||
-        !event.deltaY || document.body.classList.contains('is-home') ||
+        !event.deltaY || document.body.classList.contains('is-home') || document.body.classList.contains('wechat-open') ||
         event.target.closest('video, input, textarea, select, [contenteditable="true"]')) return;
     const about = document.querySelector('.about-scroll');
     const nextSurface = document.body.classList.contains('is-about') &&
